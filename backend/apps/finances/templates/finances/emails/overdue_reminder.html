@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { margin: 0; padding: 0; background: #f4f6f9; font-family: 'Segoe UI', Arial, sans-serif; }
+    .email-wrap { max-width: 600px; margin: 0 auto; }
+    .email-header { background: linear-gradient(135deg, #8b3320, #b53b28); color: #fff; padding: 28px 24px; border-radius: 12px 12px 0 0; }
+    .email-header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+    .email-header .sub { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+    .email-body { background: #fff; padding: 24px; }
+    .email-body h2 { font-size: 16px; color: #1a3a40; margin: 0 0 12px; }
+    .email-body p { font-size: 14px; color: #3d2e1e; line-height: 1.6; margin: 0 0 16px; }
+    .summary-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    .summary-table td { padding: 8px 10px; border-bottom: 1px solid #e8dfd2; font-size: 13px; }
+    .summary-table .label { color: #7a6e62; font-weight: 600; width: 120px; }
+    .summary-table .value { color: #1a3a40; font-weight: 700; text-align: right; }
+    .summary-table .total td { border-top: 2px solid #b53b28; font-size: 15px; padding-top: 10px; }
+    .cta-btn { display: inline-block; background: linear-gradient(135deg, #b53b28, #8b3320); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 14px; }
+    .email-footer { background: #f5f0e8; padding: 16px 24px; border-radius: 0 0 12px 12px; font-size: 11px; color: #7a6e62; text-align: center; }
+    .email-footer a { color: #2f6f7a; }
+  </style>
+</head>
+<body>
+  <div class="email-wrap">
+    <div class="email-header">
+      <h1>⚠️ Invoice Overdue</h1>
+      <div class="sub">{{ business_name }} · {{ invoice_number }}</div>
+    </div>
+    <div class="email-body">
+      <h2>Payment of {{ outstanding }} is past due</h2>
+      <p>
+        This is a reminder that invoice <strong>{{ invoice_number }}</strong> 
+        {% if client_name %}from <strong>{{ client_name }}</strong>{% endif %}
+        is now <strong>past due</strong>. 
+        The payment of <strong>{{ outstanding }}</strong> was due on <strong>{{ due_date }}</strong>.
+      </p>
+      <p>Please arrange payment at your earliest convenience to avoid any disruption of service.</p>
+
+      <table class="summary-table">
+        <tr><td class="label">Invoice</td><td class="value">{{ invoice_number }}</td></tr>
+        <tr><td class="label">Client</td><td class="value">{{ client_name }}</td></tr>
+        <tr><td class="label">Issue date</td><td class="value">{{ issue_date }}</td></tr>
+        <tr><td class="label">Due date</td><td class="value">{{ due_date }}</td></tr>
+        <tr><td class="label">Days overdue</td><td class="value" style="color:#b53b28">{{ days_overdue }} days</td></tr>
+        <tr class="total">
+          <td class="label">Amount due</td>
+          <td class="value" style="color:#b53b28">{{ outstanding }}</td>
+        </tr>
+      </table>
+
+      {% if bank_details %}
+      <div style="background:#f5f0e8;border-radius:8px;padding:12px 16px;margin-bottom:16px">
+        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#7a6e62;margin:0 0 6px">Bank details</p>
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <tr><td style="padding:2px 8px 2px 0;color:#7a6e62;font-weight:600;width:70px">Bank</td><td style="padding:2px 0;font-weight:700;color:#1a3a40">{{ bank_details.bank_name }}</td></tr>
+          <tr><td style="padding:2px 8px 2px 0;color:#7a6e62;font-weight:600">Account</td><td style="padding:2px 0;font-weight:700;color:#1a3a40">{{ bank_details.account_name }}</td></tr>
+          <tr><td style="padding:2px 8px 2px 0;color:#7a6e62;font-weight:600">Number</td><td style="padding:2px 0;font-weight:700;color:#1a3a40">{{ bank_details.account_number }}</td></tr>
+        </table>
+      </div>
+      {% endif %}
+
+      <p style="text-align:center;margin-top:24px">
+        <a href="{{ pdf_url }}" class="cta-btn">📄 View Invoice &amp; Pay</a>
+      </p>
+    </div>
+    <div class="email-footer">
+      {{ business_name }} · {% if business_location %}{{ business_location }} · {% endif %}
+      <a href="{{ base_url }}">My Finances Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+/* ============================================================
+   Avovision OIS — Colors & Type
+   Extracted from data_ingestion_engin (templates/base.html and
+   apps/user_management/templates/.../dashboards/base.html).
+   ============================================================ */
+
+/* ---- Fonts ------------------------------------------------- */
+
+@font-face {
+    font-family: "Quicksand";
+    src: url("fonts/Quicksand-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Quicksand";
+    src: url("fonts/Quicksand-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Quicksand";
+    src: url("fonts/Quicksand-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Quicksand";
+    src: url("fonts/Quicksand-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* SixHandsBrush is the script face under the "avovision" wordmark
+   ("see the new"). The original .ttf is large (~580 KB) and only
+   used decoratively in the logotype; substitute Caveat for in-app
+   use of the brush style. Flag for the user to replace if needed. */
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap");
+
+/* ---- Color tokens ----------------------------------------- */
+
+:root {
+    /* Brand palette (Avovision Official) */
+    --avo-caribbean:        #2f6f7a;   /* primary — teal */
+    --avo-caribbean-dark:   #1a3a40;   /* sidebar bottom, headers */
+    --avo-caribbean-light:  #3d8a97;
+    --avo-lime:             #a2cc39;   /* accent — call-to-action, success */
+    --avo-lime-dark:        #8bb82f;
+    --avo-salmon:           #ef8070;   /* danger / accent / "see the new" */
+    --avo-salmon-dark:      #e56a59;
+
+    /* Surfaces */
+    --avo-bg:               #f4f6f9;   /* dashboard body */
+    --avo-bg-soft:          #f5f9fa;   /* card-page body (pipeline tracker) */
+    --avo-surface:          #ffffff;   /* cards, table body */
+    --avo-surface-muted:    #f8f9fa;   /* table headers, footers */
+
+    /* Text */
+    --avo-text:             #212529;   /* body */
+    --avo-text-muted:       #6c757d;   /* labels, hints */
+    --avo-text-strong:      #1a1a2e;   /* lime-button label */
+    --avo-text-on-dark:     #ffffff;
+    --avo-text-on-dark-muted: rgba(255, 255, 255, 0.85);
+
+    /* Borders & lines */
+    --avo-border:           #e0e0e0;
+    --avo-border-soft:      #e5e7eb;
+    --avo-border-strong:    #495057;
+
+    /* Status (used in tracker badges) */
+    --avo-status-booked:        #f4a261;
+    --avo-status-completed:     #2f6f7a;
+    --avo-status-verified:      #1a5632;
+    --avo-status-overdue:       #e74c3c;
+    --avo-status-not-approved:  #8e44ad;
+    --avo-status-cancelled:     #6c757d;
+
+    /* Soft status pills (pipeline tracker) */
+    --avo-pill-booked-bg:      #d6e9f7;  --avo-pill-booked-fg:      #1f5d8d;
+    --avo-pill-overdue-bg:     #fde2e0;  --avo-pill-overdue-fg:     #a4271d;
+    --avo-pill-completed-bg:   #fff3cd;  --avo-pill-completed-fg:   #856404;
+    --avo-pill-verified-bg:    #d4edda;  --avo-pill-verified-fg:    #155724;
+    --avo-pill-cancelled-bg:   #e2e3e5;  --avo-pill-cancelled-fg:   #495057;
+
+    /* Owner badges (pipeline tracker) */
+    --avo-owner-trainer-bg:    #cfe2ff;  --avo-owner-trainer-fg:    #084298;
+    --avo-owner-analyst-bg:    #e2d9f3;  --avo-owner-analyst-fg:    #432874;
+    --avo-owner-docs-bg:       #fde2cc;  --avo-owner-docs-fg:       #8a4b00;
+    --avo-owner-coord-bg:      #f8d7da;  --avo-owner-coord-fg:      #842029;
+    --avo-owner-pm-bg:         #d1ecf1;  --avo-owner-pm-fg:         #0c5460;
+    --avo-owner-admin-bg:      #dee2e6;  --avo-owner-admin-fg:      #212529;
+
+    /* Effects */
+    --avo-shadow-sm:    0 2px 4px rgba(0, 0, 0, 0.05);
+    --avo-shadow:       0 2px 8px rgba(0, 0, 0, 0.08);
+    --avo-shadow-md:    0 4px 15px rgba(0, 0, 0, 0.10);
+    --avo-shadow-lg:    0 4px 20px rgba(0, 0, 0, 0.12);
+    --avo-shadow-side:  2px 0 10px rgba(0, 0, 0, 0.15);
+
+    /* Radii */
+    --avo-radius-xs:    4px;
+    --avo-radius-sm:    6px;
+    --avo-radius:       8px;
+    --avo-radius-md:    10px;
+    --avo-radius-lg:    12px;
+    --avo-radius-pill:  999px;
+
+    /* Layout */
+    --avo-sidebar-width: 280px;
+    --avo-sidebar-gradient: linear-gradient(180deg, var(--avo-caribbean) 0%, #1e4a52 100%);
+    --avo-avatar-gradient:  linear-gradient(135deg, var(--avo-caribbean), var(--avo-lime));
+
+    /* Type scale */
+    --avo-font-sans: "Quicksand", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    --avo-font-script: "Caveat", "SixHandsBrush", cursive;  /* tagline / brush accents */
+
+    --avo-text-xxs:     0.7rem;    /*  11.2px — KPI label, badges */
+    --avo-text-xs:      0.75rem;   /*  12px   — filter labels */
+    --avo-text-sm:      0.85rem;   /*  13.6px — secondary copy */
+    --avo-text-base:    1rem;      /*  16px   — body */
+    --avo-text-md:      1.1rem;    /*  17.6px — user-info */
+    --avo-text-lg:      1.4rem;    /*  22.4px — sidebar header */
+    --avo-text-xl:      1.5rem;    /*  24px   — page title, KPI value */
+    --avo-text-2xl:     2rem;      /*  32px   — stat number */
+    --avo-text-3xl:     2.5rem;    /*  40px   — stat-card icon */
+
+    --avo-track-xs:     0.3px;
+    --avo-track-sm:     0.5px;
+    --avo-track-md:     1.5px;    /* menu-section heading */
+}
+
+/* ---- Element defaults ------------------------------------- */
+
+html, body {
+    margin: 0;
+    background: var(--avo-bg);
+    color: var(--avo-text);
+    font-family: var(--avo-font-sans);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+h1, .avo-h1 {
+    font-size: var(--avo-text-xl);
+    font-weight: 600;          /* page-title weight */
+    color: var(--avo-text);
+    letter-spacing: 0;
+    margin: 0 0 0.5em 0;
+}
+h2, .avo-h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--avo-text);
+    margin: 0 0 0.5em 0;
+}
+h3, .avo-h3 {
+    font-size: var(--avo-text-md);
+    font-weight: 700;
+    color: var(--avo-text);
+    margin: 0 0 0.5em 0;
+}
+
+/* Eyebrows / section labels — uppercase, tracked, muted */
+.avo-eyebrow,
+.avo-kpi-label,
+.menu-section {
+    font-size: var(--avo-text-xxs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--avo-track-sm);
+    color: var(--avo-text-muted);
+}
+.menu-section {
+    letter-spacing: var(--avo-track-md);
+    opacity: 0.5;
+    font-weight: 700;
+}
+
+.avo-kpi-value {
+    font-size: var(--avo-text-xl);
+    font-weight: 700;
+    color: var(--avo-caribbean);
+    margin: 0;
+}
+
+p, .avo-body {
+    font-size: var(--avo-text-base);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--avo-text);
+}
+.avo-body-sm  { font-size: var(--avo-text-sm); }
+.avo-body-xs  { font-size: var(--avo-text-xs); }
+
+.avo-script {
+    font-family: var(--avo-font-script);
+    color: var(--avo-salmon);
+    font-weight: 500;
+}
+
+/* Form labels — semibold, slightly heavier */
+.avo-label,
+label.form-label {
+    font-size: var(--avo-text-xs);
+    font-weight: 600;
+    color: var(--avo-text-muted);
+    margin-bottom: 4px;
+    display: inline-block;
+}
+.avo-label-strong {
+    font-weight: 600;
+    color: var(--avo-text);
+}
+.avo-required::after {
+    content: "*";
+    color: var(--avo-salmon);
+    margin-left: 4px;
+}
+
+/* Section divider — teal text, lime underline (forms) */
+.avo-section-title {
+    color: var(--avo-caribbean);
+    border-bottom: 2px solid var(--avo-lime);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+code, .avo-mono {
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 0.9em;
+    background: var(--avo-surface-muted);
+    padding: 1px 6px;
+    border-radius: var(--avo-radius-xs);
+}

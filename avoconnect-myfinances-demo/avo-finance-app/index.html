@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>AvoConnect — My Finances</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── Loading screen ────────────────────────────── */
+    #boot {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(165deg, #1a3a40, #2f6f7a 60%, #3d9a6a);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 18px;
+      z-index: 9999;
+      font-family: 'Quicksand', system-ui, sans-serif;
+      transition: opacity 0.5s;
+    }
+    #boot .brand { font-size: 1.3rem; font-weight: 700; }
+    #boot .sub { font-size: 0.8rem; opacity: 0.55; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Boot Screen ────────────────────────────────── -->
+  <div id="boot">
+    <div style="width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;font-size:1.7rem">
+      <i class="bi bi-coin"></i>
+    </div>
+    <div>
+      <div class="brand">My Finances</div>
+      <div class="sub">AvoConnect</div>
+    </div>
+  </div>
+
+  <!-- ── App Shell ─────────────────────────────────── -->
+  <div class="app-shell" id="appShell">
+
+    <!-- Scroll area -->
+    <div class="app-scroll">
+
+      <!-- ════ HUB PAGE ════ -->
+      <div class="page active" id="page-hub">
+        <div class="appbar appbar-gradient">
+          <button class="appbar-btn" aria-label="Menu"><i class="bi bi-list"></i></button>
+          <div>
+            <div class="appbar-sub">AvoConnect</div>
+            <div class="appbar-title light">My Finances</div>
+          </div>
+          <div class="appbar-spacer"></div>
+          <button class="appbar-btn" aria-label="Search"><i class="bi bi-search"></i></button>
+          <button class="appbar-btn" aria-label="Notifications"><i class="bi bi-bell"></i></button>
+        </div>
+        <div class="page-body" id="hubContent"></div>
+      </div>
+
+      <!-- ════ BANK PAGE ════ -->
+      <div class="page" id="page-bank">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">Bank</div>
+          </div>
+          <div class="appbar-spacer"></div>
+        </div>
+        <div class="page-body" id="bankContent"></div>
+      </div>
+
+      <!-- ════ INCOME PAGE ════ -->
+      <div class="page" id="page-income">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">Income</div>
+          </div>
+          <div class="appbar-spacer"></div>
+          <button class="appbar-btn" style="background:linear-gradient(135deg,var(--c-lime-dark),var(--c-lime));color:#1a1a2e;box-shadow:0 4px 14px rgba(162,204,57,0.3)" onclick="App.navigate('income-new')" aria-label="Add">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+        <div class="page-body" id="incomeContent"></div>
+      </div>
+
+      <!-- ════ INVOICE LIST PAGE ════ -->
+      <div class="page" id="page-invoice">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">Invoices</div>
+          </div>
+          <div class="appbar-spacer"></div>
+          <button class="appbar-btn" style="background:linear-gradient(135deg,var(--c-lime-dark),var(--c-lime));color:#1a1a2e;box-shadow:0 4px 14px rgba(162,204,57,0.3)" onclick="App.navigate('invoice-new')" aria-label="Add">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+        <div class="page-body" id="invoiceContent"></div>
+      </div>
+
+      <!-- ════ INVOICE DETAIL PAGE ════ -->
+      <div class="page" id="page-invoice-detail">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">Invoice</div>
+            <div class="appbar-title" id="invDetailTitle">Invoice Detail</div>
+          </div>
+          <div class="appbar-spacer"></div>
+        </div>
+        <div class="page-body" id="invoiceDetailContent"></div>
+      </div>
+
+      <!-- ════ CASHFLOW PAGE ════ -->
+      <div class="page" id="page-cashflow">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">Cashflow</div>
+          </div>
+          <div class="appbar-spacer"></div>
+        </div>
+        <div class="page-body" id="cashflowContent"></div>
+      </div>
+
+      <!-- ════ EXPENSES PAGE ════ -->
+      <div class="page" id="page-expense">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">Expenses</div>
+          </div>
+          <div class="appbar-spacer"></div>
+          <button class="appbar-btn" style="background:linear-gradient(135deg,var(--c-salmon),var(--c-salmon-dark));color:#fff;box-shadow:0 4px 14px rgba(239,128,112,0.3)" onclick="App.navigate('expense-new')" aria-label="Add">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+        <div class="page-body" id="expenseContent"></div>
+      </div>
+
+      <!-- ════ NEW INVOICE FORM PAGE ════ -->
+      <div class="page" id="page-invoice-new">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">New invoice</div>
+          </div>
+          <div class="appbar-spacer"></div>
+        </div>
+        <div class="page-body" id="invoiceNewContent"></div>
+      </div>
+
+      <!-- ════ NEW INCOME FORM PAGE ════ -->
+      <div class="page" id="page-income-new">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">Log income</div>
+          </div>
+          <div class="appbar-spacer"></div>
+        </div>
+        <div class="page-body" id="incomeNewContent"></div>
+      </div>
+
+      <!-- ════ NEW EXPENSE FORM PAGE ════ -->
+      <div class="page" id="page-expense-new">
+        <div class="appbar appbar-plain">
+          <button class="appbar-btn back-btn" aria-label="Back"><i class="bi bi-arrow-left"></i></button>
+          <div>
+            <div class="appbar-sub" style="color:var(--ac-warm-gray)">My Finances</div>
+            <div class="appbar-title">Log expense</div>
+          </div>
+          <div class="appbar-spacer"></div>
+        </div>
+        <div class="page-body" id="expenseNewContent"></div>
+      </div>
+
+    </div><!-- /.app-scroll -->
+
+    <!-- ════ Bottom Tab Bar ════ -->
+    <div class="tabbar">
+      <button class="tab active" id="tab-hub" data-page="hub">
+        <i class="bi bi-house-door"></i><span>Home</span>
+      </button>
+      <button class="tab" id="tab-ledger" data-page="income">
+        <i class="bi bi-list-check"></i><span>Ledger</span>
+      </button>
+      <button class="tab tab-fab" data-page="invoice-new">
+        <span class="tab-fab-inner"><i class="bi bi-plus-lg"></i></span>
+        <span style="margin-top:4px">New</span>
+      </button>
+      <button class="tab" id="tab-invoice" data-page="invoice">
+        <i class="bi bi-receipt"></i><span>Invoices</span>
+      </button>
+      <button class="tab" id="tab-insights" data-page="cashflow">
+        <i class="bi bi-graph-up-arrow"></i><span>Insights</span>
+      </button>
+    </div>
+
+  </div><!-- /.app-shell -->
+
+  <!-- ════ Toast Container ════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ════ Scripts ════ -->
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <!-- Data Layer -->
+  <script src="data.js"></script>
+
+  <!-- App Logic -->
+  <script src="app.js"></script>
+
+</body>
+</html>

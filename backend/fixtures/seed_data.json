@@ -1,0 +1,912 @@
+[
+  {
+    "model": "finances.business",
+    "pk": "b0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "name": "Nala Charcoal Co-op",
+      "province": "Limpopo",
+      "email": "nala.coop@example.co.za",
+      "location": "Polokwane"
+    }
+  },
+  {
+    "model": "finances.client",
+    "pk": "c0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "name": "Polokwane Market",
+      "client_type": "market",
+      "contact": "015 290 2000"
+    }
+  },
+  {
+    "model": "finances.client",
+    "pk": "c0000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "name": "Greenfields Lodge",
+      "client_type": "wholesale",
+      "contact": "orders@greenfields.co.za"
+    }
+  },
+  {
+    "model": "finances.client",
+    "pk": "c0000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "name": "Mokopane Spar",
+      "client_type": "retail",
+      "contact": "015 491 8200"
+    }
+  },
+  {
+    "model": "finances.client",
+    "pk": "c0000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "name": "Thabo Mahlangu",
+      "client_type": "individual",
+      "contact": "082 555 1212"
+    }
+  },
+  {
+    "model": "finances.client",
+    "pk": "c0000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "name": "BraaiHouse Group",
+      "client_type": "wholesale",
+      "contact": "procurement@braaihouse.co.za"
+    }
+  },
+  {
+    "model": "finances.product",
+    "pk": "p0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Charcoal",
+      "unit": "kg",
+      "price": "22.00",
+      "stock": "1840.00"
+    }
+  },
+  {
+    "model": "finances.product",
+    "pk": "p0000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Firewood",
+      "unit": "kg",
+      "price": "6.50",
+      "stock": "3200.00"
+    }
+  },
+  {
+    "model": "finances.product",
+    "pk": "p0000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Biochar",
+      "unit": "kg",
+      "price": "35.00",
+      "stock": "420.00"
+    }
+  },
+  {
+    "model": "finances.product",
+    "pk": "p0000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Briquettes",
+      "unit": "kg",
+      "price": "18.00",
+      "stock": "960.00"
+    }
+  },
+  {
+    "model": "finances.product",
+    "pk": "p0000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Animal Feed",
+      "unit": "kg",
+      "price": "14.00",
+      "stock": "750.00"
+    }
+  },
+  {
+    "model": "finances.product",
+    "pk": "p0000000-0000-0000-0000-000000000006",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Potatoes",
+      "unit": "kg",
+      "price": "12.00",
+      "stock": "1200.00"
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Machinery & equipment",
+      "icon": "bi-wrench-adjustable",
+      "sort_order": 1
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Monthly wages",
+      "icon": "bi-people",
+      "sort_order": 2
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Delivery wages",
+      "icon": "bi-truck",
+      "sort_order": 3
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Part-time wages",
+      "icon": "bi-person-workspace",
+      "sort_order": 4
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Fuel & energy",
+      "icon": "bi-fuel-pump",
+      "sort_order": 5
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000006",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Packaging & storage",
+      "icon": "bi-box-seam",
+      "sort_order": 6
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000007",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Transport & logistics",
+      "icon": "bi-truck-front",
+      "sort_order": 7
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000008",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Safety, health & env.",
+      "icon": "bi-shield-check",
+      "sort_order": 8
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000009",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Maintenance & repairs",
+      "icon": "bi-tools",
+      "sort_order": 9
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000010",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Raw materials",
+      "icon": "bi-tree",
+      "sort_order": 10
+    }
+  },
+  {
+    "model": "finances.expensecategory",
+    "pk": "ec0000000-0000-0000-0000-000000000011",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "label": "Other",
+      "icon": "bi-three-dots",
+      "sort_order": 99
+    }
+  },
+  {
+    "model": "finances.bankaccount",
+    "pk": "ba0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_name": "FNB",
+      "account_name": "Business Cheque",
+      "account_number": "•••• 4421",
+      "holder": "Nala Charcoal Co-op",
+      "balance": "18420.55",
+      "currency": "ZAR",
+      "is_primary": true,
+      "color": "#2f6f7a"
+    }
+  },
+  {
+    "model": "finances.bankaccount",
+    "pk": "ba0000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_name": "Capitec",
+      "account_name": "Savings",
+      "account_number": "•••• 9087",
+      "holder": "Nala Charcoal Co-op",
+      "balance": "6210.00",
+      "currency": "ZAR",
+      "is_primary": false,
+      "color": "#a2cc39"
+    }
+  },
+  {
+    "model": "finances.bankaccount",
+    "pk": "ba0000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_name": "Cash on hand",
+      "account_name": "Petty cash",
+      "account_number": "—",
+      "holder": "Operations",
+      "balance": "1240.00",
+      "currency": "ZAR",
+      "is_primary": false,
+      "color": "#ef8070"
+    }
+  },
+  {
+    "model": "finances.invoice",
+    "pk": "inv000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice_number": "INV-2026-0014",
+      "client": "c0000000-0000-0000-0000-000000000002",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "issue_date": "2026-05-12",
+      "due_date": "2026-06-11",
+      "status": "sent",
+      "payment_terms": "net_30",
+      "notes": "Delivery to lodge kitchen on Tue 19 May."
+    }
+  },
+  {
+    "model": "finances.invoice",
+    "pk": "inv000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice_number": "INV-2026-0013",
+      "client": "c0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "issue_date": "2026-05-08",
+      "due_date": "2026-05-22",
+      "status": "partial",
+      "payment_terms": "net_14",
+      "notes": ""
+    }
+  },
+  {
+    "model": "finances.invoice",
+    "pk": "inv000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice_number": "INV-2026-0012",
+      "client": "c0000000-0000-0000-0000-000000000005",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "issue_date": "2026-04-29",
+      "due_date": "2026-05-13",
+      "status": "overdue",
+      "payment_terms": "net_14",
+      "notes": "Followed up by SMS 14 May."
+    }
+  },
+  {
+    "model": "finances.invoice",
+    "pk": "inv000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice_number": "INV-2026-0011",
+      "client": "c0000000-0000-0000-0000-000000000003",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "issue_date": "2026-04-24",
+      "due_date": "2026-05-08",
+      "status": "paid",
+      "payment_terms": "net_14",
+      "notes": ""
+    }
+  },
+  {
+    "model": "finances.invoice",
+    "pk": "inv000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice_number": "INV-2026-0010",
+      "client": "c0000000-0000-0000-0000-000000000004",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "issue_date": "2026-05-02",
+      "due_date": null,
+      "status": "draft",
+      "payment_terms": "on_receipt",
+      "notes": ""
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000001",
+      "product": "p0000000-0000-0000-0000-000000000001",
+      "description": "Lumpwood charcoal 25kg bags",
+      "quantity": "60.00",
+      "unit": "kg",
+      "unit_price": "22.00",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000002",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000001",
+      "product": "p0000000-0000-0000-0000-000000000004",
+      "description": "Briquettes for restaurant",
+      "quantity": "40.00",
+      "unit": "kg",
+      "unit_price": "18.00",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000003",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000002",
+      "product": "p0000000-0000-0000-0000-000000000001",
+      "description": "Bulk charcoal",
+      "quantity": "120.00",
+      "unit": "kg",
+      "unit_price": "22.00",
+      "is_paid": true
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000004",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000002",
+      "product": "p0000000-0000-0000-0000-000000000006",
+      "description": "Potato bags",
+      "quantity": "80.00",
+      "unit": "kg",
+      "unit_price": "12.00",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000005",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000003",
+      "product": "p0000000-0000-0000-0000-000000000001",
+      "description": "Charcoal supply",
+      "quantity": "200.00",
+      "unit": "kg",
+      "unit_price": "22.00",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000006",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000004",
+      "product": "p0000000-0000-0000-0000-000000000002",
+      "description": "Firewood bundles",
+      "quantity": "240.00",
+      "unit": "kg",
+      "unit_price": "6.50",
+      "is_paid": true
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000007",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000004",
+      "product": "p0000000-0000-0000-0000-000000000003",
+      "description": "Garden biochar",
+      "quantity": "30.00",
+      "unit": "kg",
+      "unit_price": "35.00",
+      "is_paid": true
+    }
+  },
+  {
+    "model": "finances.invoicelineitem",
+    "pk": "li0000000-0000-0000-0000-000000000008",
+    "fields": {
+      "invoice": "inv000000-0000-0000-0000-000000000005",
+      "product": "p0000000-0000-0000-0000-000000000002",
+      "description": "",
+      "quantity": "50.00",
+      "unit": "kg",
+      "unit_price": "6.50",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "finances.incomeentry",
+    "pk": "inc000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice": null,
+      "client": "c0000000-0000-0000-0000-000000000004",
+      "product": "p0000000-0000-0000-0000-000000000002",
+      "bank_account": "ba0000000-0000-0000-0000-000000000003",
+      "date": "2026-05-15",
+      "source": "standalone",
+      "amount": "162.50",
+      "payment_method": "cash",
+      "quantity": "25.00",
+      "unit": "kg",
+      "note": "Walk-in sale at gate"
+    }
+  },
+  {
+    "model": "finances.incomeentry",
+    "pk": "inc000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice": null,
+      "client": "c0000000-0000-0000-0000-000000000001",
+      "product": "p0000000-0000-0000-0000-000000000006",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-14",
+      "source": "standalone",
+      "amount": "480.00",
+      "payment_method": "eft",
+      "quantity": "40.00",
+      "unit": "kg",
+      "note": ""
+    }
+  },
+  {
+    "model": "finances.incomeentry",
+    "pk": "inc000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice": null,
+      "client": "c0000000-0000-0000-0000-000000000004",
+      "product": "p0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000003",
+      "date": "2026-05-13",
+      "source": "standalone",
+      "amount": "264.00",
+      "payment_method": "cash",
+      "quantity": "12.00",
+      "unit": "kg",
+      "note": ""
+    }
+  },
+  {
+    "model": "finances.incomeentry",
+    "pk": "inc000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice": "inv000000-0000-0000-0000-000000000004",
+      "client": "c0000000-0000-0000-0000-000000000003",
+      "product": null,
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-08",
+      "source": "invoice",
+      "amount": "2610.00",
+      "payment_method": "eft",
+      "quantity": null,
+      "unit": "",
+      "note": "Mokopane Spar — paid in full"
+    }
+  },
+  {
+    "model": "finances.incomeentry",
+    "pk": "inc000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice": null,
+      "client": "c0000000-0000-0000-0000-000000000002",
+      "product": "p0000000-0000-0000-0000-000000000003",
+      "bank_account": "ba0000000-0000-0000-0000-000000000002",
+      "date": "2026-05-05",
+      "source": "standalone",
+      "amount": "525.00",
+      "payment_method": "eft",
+      "quantity": "15.00",
+      "unit": "kg",
+      "note": ""
+    }
+  },
+  {
+    "model": "finances.incomeentry",
+    "pk": "inc000000-0000-0000-0000-000000000006",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "invoice": "inv000000-0000-0000-0000-000000000002",
+      "client": "c0000000-0000-0000-0000-000000000001",
+      "product": null,
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-10",
+      "source": "invoice",
+      "amount": "1800.00",
+      "payment_method": "eft",
+      "quantity": null,
+      "unit": "",
+      "note": "Polokwane Market — first instalment"
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000005",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-15",
+      "amount": "480.00",
+      "vendor": "Engen Polokwane",
+      "note": "Petrol for bakkie"
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000004",
+      "bank_account": "ba0000000-0000-0000-0000-000000000003",
+      "date": "2026-05-14",
+      "amount": "1200.00",
+      "vendor": "4 part-time hires",
+      "note": "Week 19 sorting & stacking"
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000006",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-13",
+      "amount": "360.00",
+      "vendor": "BagsCo SA",
+      "note": "25kg charcoal bags"
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000009",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-12",
+      "amount": "850.00",
+      "vendor": "Polokwane Welding",
+      "note": "Kiln door repair"
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000007",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-09",
+      "amount": "1500.00",
+      "vendor": "Mphahlele Transport",
+      "note": "Lodge delivery run"
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000006",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000008",
+      "bank_account": "ba0000000-0000-0000-0000-000000000002",
+      "date": "2026-05-06",
+      "amount": "620.00",
+      "vendor": "SafetyMax",
+      "note": "PPE — gloves & masks"
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000007",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000010",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-04",
+      "amount": "980.00",
+      "vendor": "Local biomass collector",
+      "note": ""
+    }
+  },
+  {
+    "model": "finances.expense",
+    "pk": "exp000000-0000-0000-0000-000000000008",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "category": "ec0000000-0000-0000-0000-000000000002",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-01",
+      "amount": "6400.00",
+      "vendor": "May wages",
+      "note": ""
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000003",
+      "date": "2026-05-15",
+      "transaction_type": "in",
+      "amount": "162.50",
+      "label": "Cash sale — Thabo M.",
+      "reference_id": "inc000000-0000-0000-0000-000000000001",
+      "reference_type": "income"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-15",
+      "transaction_type": "out",
+      "amount": "480.00",
+      "label": "Engen Polokwane (fuel)",
+      "reference_id": "exp000000-0000-0000-0000-000000000001",
+      "reference_type": "expense"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-14",
+      "transaction_type": "in",
+      "amount": "480.00",
+      "label": "Polokwane Market — potatoes",
+      "reference_id": "inc000000-0000-0000-0000-000000000002",
+      "reference_type": "income"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000003",
+      "date": "2026-05-14",
+      "transaction_type": "out",
+      "amount": "1200.00",
+      "label": "Part-time wages — wk 19",
+      "reference_id": "exp000000-0000-0000-0000-000000000002",
+      "reference_type": "expense"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000003",
+      "date": "2026-05-13",
+      "transaction_type": "in",
+      "amount": "264.00",
+      "label": "Cash sale — Thabo M.",
+      "reference_id": "inc000000-0000-0000-0000-000000000003",
+      "reference_type": "income"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000006",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-12",
+      "transaction_type": "out",
+      "amount": "850.00",
+      "label": "Polokwane Welding (kiln)",
+      "reference_id": "exp000000-0000-0000-0000-000000000004",
+      "reference_type": "expense"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000007",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-10",
+      "transaction_type": "in",
+      "amount": "1800.00",
+      "label": "INV-0013 instalment — Polokwane Market",
+      "reference_id": "inc000000-0000-0000-0000-000000000006",
+      "reference_type": "income"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000008",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-08",
+      "transaction_type": "in",
+      "amount": "2610.00",
+      "label": "INV-0011 paid — Mokopane Spar",
+      "reference_id": "inc000000-0000-0000-0000-000000000004",
+      "reference_type": "income"
+    }
+  },
+  {
+    "model": "finances.ledgertransaction",
+    "pk": "t__000000-0000-0000-0000-000000000009",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000002",
+      "date": "2026-05-06",
+      "transaction_type": "out",
+      "amount": "620.00",
+      "label": "SafetyMax — PPE",
+      "reference_id": "exp000000-0000-0000-0000-000000000006",
+      "reference_type": "expense"
+    }
+  },
+  {
+    "model": "finances.statemententry",
+    "pk": "stm000000-0000-0000-0000-000000000001",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000003",
+      "date": "2026-05-15",
+      "entry_type": "in",
+      "amount": "162.50",
+      "label": "CASH DEPOSIT",
+      "bank_reference": "Thabo Mahlangu",
+      "status": "pending",
+      "matched_income": null,
+      "matched_expense": null
+    }
+  },
+  {
+    "model": "finances.statemententry",
+    "pk": "stm000000-0000-0000-0000-000000000002",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-15",
+      "entry_type": "out",
+      "amount": "480.00",
+      "label": "DEBIT CARD PURCHASE",
+      "bank_reference": "ENGEN POLOKWANE",
+      "status": "pending",
+      "matched_income": null,
+      "matched_expense": null
+    }
+  },
+  {
+    "model": "finances.statemententry",
+    "pk": "stm000000-0000-0000-0000-000000000003",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-14",
+      "entry_type": "in",
+      "amount": "480.00",
+      "label": "EFT CREDIT",
+      "bank_reference": "Polokwane Market",
+      "status": "pending",
+      "matched_income": null,
+      "matched_expense": null
+    }
+  },
+  {
+    "model": "finances.statemententry",
+    "pk": "stm000000-0000-0000-0000-000000000004",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-12",
+      "entry_type": "out",
+      "amount": "850.00",
+      "label": "DEBIT CARD PURCHASE",
+      "bank_reference": "Polokwane Welding",
+      "status": "pending",
+      "matched_income": null,
+      "matched_expense": null
+    }
+  },
+  {
+    "model": "finances.statemententry",
+    "pk": "stm000000-0000-0000-0000-000000000005",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-10",
+      "entry_type": "in",
+      "amount": "1800.00",
+      "label": "EFT CREDIT",
+      "bank_reference": "Polokwane Market",
+      "status": "pending",
+      "matched_income": null,
+      "matched_expense": null
+    }
+  },
+  {
+    "model": "finances.statemententry",
+    "pk": "stm000000-0000-0000-0000-000000000006",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000001",
+      "date": "2026-05-08",
+      "entry_type": "in",
+      "amount": "2610.00",
+      "label": "EFT CREDIT",
+      "bank_reference": "Mokopane Spar",
+      "status": "pending",
+      "matched_income": null,
+      "matched_expense": null
+    }
+  },
+  {
+    "model": "finances.statemententry",
+    "pk": "stm000000-0000-0000-0000-000000000007",
+    "fields": {
+      "business": "b0000000-0000-0000-0000-000000000001",
+      "bank_account": "ba0000000-0000-0000-0000-000000000002",
+      "date": "2026-05-06",
+      "entry_type": "out",
+      "amount": "620.00",
+      "label": "DEBIT CARD PURCHASE",
+      "bank_reference": "SAFETYMAX",
+      "status": "pending",
+      "matched_income": null,
+      "matched_expense": null
+    }
+  }
+]
