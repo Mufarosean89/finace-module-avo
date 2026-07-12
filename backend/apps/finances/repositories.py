@@ -19,6 +19,7 @@ from .models import (
     Invoice, InvoiceLineItem, IncomeEntry, Expense,
     LedgerTransaction, StatementEntry,
 )
+from .utils.invoice_helpers import reconcile_line_items
 
 
 # ── Filter / Sort configs ────────────────────────────────
@@ -246,46 +247,16 @@ class InvoiceRepository(BaseRepository[Invoice]):
         invoice_data: dict,
         line_items_data: Optional[List[dict]] = None,
     ) -> Invoice:
-        """
-        Update an invoice's scalar fields and fully reconcile its
-        line items. Existing items not in the payload are **deleted**,
-        new items are created, matching items are updated.
-
-        Afterwards re-derives the invoice status via :meth:`Invoice.compute_status`.
-        """
         invoice = self.get_by_id_or_fail(invoice_id)
 
-        # Update scalar fields
         for attr, value in invoice_data.items():
             setattr(invoice, attr, value)
         invoice.save()
 
         if line_items_data is not None:
-            existing = {str(li.id): li for li in invoice.line_items.all()}
-            sent_ids = set()
+            reconcile_line_items(invoice, line_items_data)
 
-            for data in line_items_data:
-                li_id = data.get('id')
-                if li_id and str(li_id) in existing:
-                    li = existing[str(li_id)]
-                    for attr, value in data.items():
-                        if attr != 'id':
-                            setattr(li, attr, value)
-                    li.save()
-                    sent_ids.add(str(li_id))
-                else:
-                    InvoiceLineItem.objects.create(invoice=invoice, **{
-                        k: v for k, v in data.items() if k != 'id'
-                    })
-
-            # Remove items not in payload
-            for li_id, li in existing.items():
-                if li_id not in sent_ids:
-                    li.delete()
-
-        # Re-derive status from updated line items
         invoice.compute_status(commit=True)
-
         return invoice
 
     # ── Status overriding ────────────────────────────────────

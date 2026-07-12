@@ -158,15 +158,25 @@ const FinanceData = (() => {
     return 'R ' + Number(n).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
+  function _parseISODate(iso) {
+    if (!iso) return null;
+    const parts = iso.split('-');
+    if (parts.length !== 3) return null;
+    // Parse as local date to avoid timezone offset issues
+    return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  }
+
   const fmtDate = (iso) => {
     if (!iso) return '—';
-    const d = new Date(iso + 'T00:00');
+    const d = _parseISODate(iso);
+    if (!d) return '—';
     return d.toLocaleDateString('en-ZA', { day: '2-digit', month: 'short', year: 'numeric' });
   };
 
   const fmtDateShort = (iso) => {
     if (!iso) return '—';
-    const d = new Date(iso + 'T00:00');
+    const d = _parseISODate(iso);
+    if (!d) return '—';
     return d.toLocaleDateString('en-ZA', { day: '2-digit', month: 'short' });
   };
 

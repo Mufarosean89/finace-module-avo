@@ -17,23 +17,26 @@
   let statementEntries = [];
   let showReconcile = false;
 
-  // ── Date range filter state ──────────────────────────
-  let dateRange = {
-    preset: 'this-month',
-    startDate: '2026-05-01',
-    endDate: '2026-05-31',
-  };
+  // ── Demo date (fixed for seed data consistency) ──────
+  const DEMO_DATE = '2026-05-15';
+  const DEMO_YEAR = 2026;
 
-  function getDateRangeForPreset(preset) {
+  function _demoDateRange(preset) {
+    const start = DEMO_YEAR + '-05-01';
+    const end = DEMO_YEAR + '-05-31';
     const presets = {
-      'this-month':   { startDate: '2026-05-01', endDate: '2026-05-31' },
-      'last-month':   { startDate: '2026-04-01', endDate: '2026-04-30' },
-      'last-3-months':{ startDate: '2026-03-01', endDate: '2026-05-31' },
-      'this-year':    { startDate: '2026-01-01', endDate: '2026-12-31' },
+      'this-month':   { startDate: start, endDate: end },
+      'last-month':   { startDate: DEMO_YEAR + '-04-01', endDate: DEMO_YEAR + '-04-30' },
+      'last-3-months':{ startDate: DEMO_YEAR + '-03-01', endDate: end },
+      'this-year':    { startDate: DEMO_YEAR + '-01-01', endDate: DEMO_YEAR + '-12-31' },
       'all-time':     { startDate: null,         endDate: null },
     };
     return presets[preset] || presets['this-month'];
   }
+
+  let dateRange = _demoDateRange('this-month');
+
+  function getDateRangeForPreset(preset) { return _demoDateRange(preset); }
 
   function applyDateRange(preset, startDate, endDate) {
     dateRange.preset = preset;
@@ -339,11 +342,11 @@
 
   function nextInvoiceId() {
     const nums = invoices.map(i => {
-      const m = i.id.match(/INV-2026-(\d+)/);
+      const m = i.id.match(new RegExp('INV-' + DEMO_YEAR + '-(\\d+)'));
       return m ? parseInt(m[1], 10) : 0;
     });
     const max = nums.length ? Math.max(...nums) : 0;
-    return 'INV-2026-' + String(max + 1).padStart(4, '0');
+    return 'INV-' + DEMO_YEAR + '-' + String(max + 1).padStart(4, '0');
   }
 
   let toastCount = 0;
@@ -851,8 +854,7 @@
         '<label class="form-label">Amount (R)</label>' +
         '<input type="number" class="form-control" id="payAmount" value="' + outstanding.toFixed(2) + '" step="0.01">' +
       '</div>' +
-      '<div class="row g-2 mb-3">' +
-        '<div class="col-6"><label class="form-label">Date</label><input type="date" class="form-control" id="payDate" value="2026-05-15"></div>' +
+      '<div class="row g-2 mb-3">' +            '<div class="col-6"><label class="form-label">Date</label><input type="date" class="form-control" id="payDate" value="' + DEMO_DATE + '"></div>' +
         '<div class="col-6"><label class="form-label">Method</label><select class="form-select" id="payMethod"><option value="eft">EFT</option><option value="cash">Cash</option><option value="card">Card</option><option value="mobile">Mobile</option></select></div>' +
       '</div>' +
       '<div class="mb-3"><label class="form-label">Note</label><input type="text" class="form-control" id="payNote" placeholder="Reference..."></div>' +
@@ -1083,12 +1085,15 @@
   // NEW INVOICE FORM
   // ════════════════════════════════════════════════════════
   let invoiceFormStep = 1;
-  let invoiceForm = {
-    clientId: '', issueDate: '2026-05-15', dueDate: '2026-06-14',
-    paymentTerms: 'Net 30', bankAccountId: 'ba_001',
-    lineItems: [{ id: 'li-' + Date.now(), productId: '', description: '', qty: 0, unitPrice: 0 }],
-    notes: '', sendNow: false,
-  };
+  function defaultInvoiceForm() {
+    return {
+      clientId: '', issueDate: DEMO_DATE, dueDate: DEMO_YEAR + '-06-14',
+      paymentTerms: 'Net 30', bankAccountId: 'ba_001',
+      lineItems: [{ id: 'li-' + Date.now(), productId: '', description: '', qty: 0, unitPrice: 0 }],
+      notes: '', sendNow: false,
+    };
+  }
+  let invoiceForm = defaultInvoiceForm();
 
   function renderNewInvoiceForm() {
     const totalSteps = 4;
@@ -1269,14 +1274,8 @@
     invoices.unshift(newInv);
     saveState();
     showToast(sendNow ? 'Invoice sent' : 'Invoice saved', newInv.id + ' · ' + D.fmtR(invoiceForm.lineItems.reduce((s, li) => s + (li.qty * li.unitPrice), 0)));
-    // Reset form
     invoiceFormStep = 1;
-    invoiceForm = {
-      clientId: '', issueDate: '2026-05-15', dueDate: '2026-06-14',
-      paymentTerms: 'Net 30', bankAccountId: 'ba_001',
-      lineItems: [{ id: 'li-' + Date.now(), productId: '', description: '', qty: 0, unitPrice: 0 }],
-      notes: '', sendNow: false,
-    };
+    invoiceForm = defaultInvoiceForm();
     navigate('invoice-detail', { invoiceId: newInv.id });
   };
 
@@ -1302,7 +1301,7 @@
           '<div class="col-6"><label class="form-label">Amount (R) <span class="text-salmon">*</span></label>' +
             '<input type="number" class="form-control" id="incAmount" placeholder="0.00" step="0.01"></div>' +
           '<div class="col-6"><label class="form-label">Date</label>' +
-            '<input type="date" class="form-control" id="incDate" value="2026-05-15"></div>' +
+            '<input type="date" class="form-control" id="incDate" value="' + DEMO_DATE + '"></div>' +
         '</div>' +
         '<div class="mb-3"><label class="form-label">Payment method</label>' +
           '<select class="form-select" id="incMethod"><option value="eft">EFT</option><option value="cash">Cash</option><option value="card">Card</option><option value="mobile">Mobile</option></select></div>' +
@@ -1366,7 +1365,7 @@
         '<div class="mb-3"><label class="form-label">Amount (R) <span class="text-salmon">*</span></label>' +
           '<input type="number" class="form-control" id="expAmount" placeholder="0.00" step="0.01"></div>' +
         '<div class="row g-2 mb-3">' +
-          '<div class="col-6"><label class="form-label">Date</label><input type="date" class="form-control" id="expDate" value="2026-05-15"></div>' +
+          '<div class="col-6"><label class="form-label">Date</label><input type="date" class="form-control" id="expDate" value="' + DEMO_DATE + '"></div>' +
           '<div class="col-6"><label class="form-label">Paid from</label><select class="form-select" id="expBank">' +
             accounts.map(a => '<option value="' + a.id + '">' + a.bank + ' ' + a.accountNumber + '</option>').join('') +
           '</select></div>' +

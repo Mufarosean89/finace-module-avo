@@ -3,6 +3,7 @@ djangorestframework>=3.16,<3.17
 django-cors-headers>=4.7,<4.8
 psycopg2-binary>=2.9,<2.10
 python-decouple>=3.8,<3.9
+dj-database-url>=6.0,<7.0
 gunicorn>=23.0,<23.1
 django-extensions>=4.1,<4.2
 Pillow>=11.0,<12.0

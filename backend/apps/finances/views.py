@@ -4,19 +4,16 @@ DRF views — one ViewSet per aggregate root, plus custom endpoints.
 import os
 
 from django.core.files.base import ContentFile
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import redirect
-from rest_framework import viewsets, status, permissions
+from django.utils import timezone
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
-from .image_processing import process_uploaded_image, is_processable_image
-
-from django.http import HttpResponse
-from django.utils import timezone
-
+from .image_processing import process_uploaded_image
 from .models import (
     Business, Client, Product, ExpenseCategory, BankAccount,
     Invoice, IncomeEntry, Expense, LedgerTransaction, StatementEntry,

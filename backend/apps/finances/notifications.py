@@ -1,22 +1,10 @@
 """
 Notification service — sends email and SMS alerts for invoice events.
 
-Replaces the ``NotificationChannel`` placeholder in ``services.py`` with
-real implementations powered by Django's email framework and Twilio.
-
 Channels
 --------
 * **Email** — Django ``send_mail`` (supports SMTP, SendGrid, console)
-* **SMS** — Twilio Programmable SMS (fallback gracefully if not configured)
-
-Configuration
--------------
-All settings are in ``django.conf.settings``:
-
-* ``EMAIL_BACKEND``, ``EMAIL_HOST``, etc. (standard Django email)
-* ``TWILIO_ACCOUNT_SID``, ``TWILIO_AUTH_TOKEN``, ``TWILIO_FROM_NUMBER``
-* ``BASE_URL`` — used to build absolute PDF download links
-* ``DEFAULT_FROM_EMAIL``, ``DEFAULT_FROM_NAME``
+* **SMS** — Twilio Programmable SMS (falls back gracefully if unconfigured)
 """
 from __future__ import annotations
 
@@ -24,44 +12,18 @@ import logging
 from datetime import date
 from decimal import Decimal
 from typing import Optional
-from uuid import UUID
 
 from django.conf import settings
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.utils import timezone
 
-from .models import Invoice, Business, Client, BankAccount
+from .models import Invoice, Business
+from .formatters import fmt_rand, fmt_date, get_status_label
 
 logger = logging.getLogger(__name__)
 
 
-# ── Helpers ─────────────────────────────────────────────────
-
-def _fmt_rand(n) -> str:
-    """Format as ZAR. e.g. 1500 → 'R 1 500.00'."""
-    if n is None:
-        return 'R 0.00'
-    return f'R {float(n):,.2f}'
-
-
-def _fmt_date(d) -> str:
-    """Format date as '15 May 2026'."""
-    if not d:
-        return '—'
-    return d.strftime('%d %b %Y')
-
-
-def _get_status_label(status: str) -> str:
-    labels = {
-        'draft': 'Draft', 'sent': 'Sent', 'partial': 'Partially Paid',
-        'paid': 'Paid', 'overdue': 'Overdue',
-    }
-    return labels.get(status, status.capitalize())
-
-
 def _build_invoice_context(invoice: Invoice) -> dict:
-    """Build a shared context dict for email templates."""
     business = invoice.business
     client = invoice.client
 
@@ -92,12 +54,12 @@ def _build_invoice_context(invoice: Invoice) -> dict:
         'client_name': client.name,
         'client_contact': client.contact or '',
         'status': invoice.status,
-        'status_label': _get_status_label(invoice.status),
-        'issue_date': _fmt_date(invoice.issue_date),
-        'due_date': _fmt_date(invoice.due_date),
+        'status_label': get_status_label(invoice.status),
+        'issue_date': fmt_date(invoice.issue_date),
+        'due_date': fmt_date(invoice.due_date),
         'payment_terms': invoice.payment_terms or 'net_30',
-        'total': _fmt_rand(subtotal),
-        'outstanding': _fmt_rand(outstanding),
+        'total': fmt_rand(subtotal),
+        'outstanding': fmt_rand(outstanding),
         'bank_details': bank_details,
         'pdf_url': pdf_url,
         'base_url': base_url,
@@ -228,7 +190,6 @@ def notify_invoice_sent(invoice: Invoice) -> None:
     business = invoice.business
     client = invoice.client
 
-    # ── Email to the business owner ──────────────────────────
     if business.email:
         _send_html_email(
             subject=f'📨 Invoice {invoice.invoice_number} sent to {client.name}',
@@ -237,13 +198,13 @@ def notify_invoice_sent(invoice: Invoice) -> None:
             to_email=business.email,
         )
 
-    # ── SMS alert ────────────────────────────────────────────
     phone = _get_sms_recipient(business)
     if phone:
+        total = sum(li.quantity * li.unit_price for li in invoice.line_items.all())
         _send_sms(
             phone,
             f'AvoConnect: Invoice {invoice.invoice_number} sent to {client.name}. '
-            f'Amount: {_fmt_rand(sum(li.quantity * li.unit_price for li in invoice.line_items.all()))}',
+            f'Amount: {fmt_rand(total)}',
         )
 
 
@@ -253,58 +214,38 @@ def notify_payment_received(
     *,
     payment_method: str = 'eft',
 ) -> None:
-    """
-    Send notifications when a payment is recorded against an invoice.
-
-    * Email: sends a HTML receipt with invoice summary + PDF link
-    * SMS: sends short payment confirmation
-    """
     ctx = _build_invoice_context(invoice)
     ctx.update({
-        'amount': _fmt_rand(amount),
-        'payment_date': _fmt_date(date.today()),
+        'amount': fmt_rand(amount),
+        'payment_date': fmt_date(date.today()),
         'payment_method': payment_method.upper(),
     })
 
     business = invoice.business
 
-    # ── Email receipt to the business ────────────────────────
     if business.email:
         _send_html_email(
-            subject=f'💰 Payment of {_fmt_rand(amount)} received — {invoice.invoice_number}',
+            subject=f'💰 Payment of {fmt_rand(amount)} received — {invoice.invoice_number}',
             template_name='finances/emails/payment_receipt.html',
             context=ctx,
             to_email=business.email,
         )
 
-    # ── SMS alert to the business ────────────────────────────
     phone = _get_sms_recipient(business)
     if phone:
         _send_sms(
             phone,
-            f'AvoConnect: {_fmt_rand(amount)} received for '
-            f'{invoice.invoice_number}. Status: {_get_status_label(invoice.status)}',
+            f'AvoConnect: {fmt_rand(amount)} received for '
+            f'{invoice.invoice_number}. Status: {get_status_label(invoice.status)}',
         )
 
 
 def notify_invoice_overdue(invoice: Invoice) -> None:
-    """
-    Send notifications when an invoice becomes overdue.
-
-    * Email: sends an overdue reminder with bank details and payment link
-    * SMS: sends a short overdue alert
-    """
     ctx = _build_invoice_context(invoice)
-
-    # Calculate days overdue
-    if invoice.due_date:
-        ctx['days_overdue'] = (date.today() - invoice.due_date).days
-    else:
-        ctx['days_overdue'] = 0
+    ctx['days_overdue'] = (date.today() - invoice.due_date).days if invoice.due_date else 0
 
     business = invoice.business
 
-    # ── Email reminder ───────────────────────────────────────
     if business.email:
         _send_html_email(
             subject=f'⚠️ Overdue: {invoice.invoice_number} — '
@@ -314,7 +255,6 @@ def notify_invoice_overdue(invoice: Invoice) -> None:
             to_email=business.email,
         )
 
-    # ── SMS alert ────────────────────────────────────────────
     phone = _get_sms_recipient(business)
     if phone:
         _send_sms(
@@ -325,19 +265,8 @@ def notify_invoice_overdue(invoice: Invoice) -> None:
 
 
 def send_overdue_reminder_email(invoice: Invoice) -> bool:
-    """
-    Explicitly send an overdue reminder email for a single invoice.
-
-    Called by the ``check_overdue`` management command for each
-    newly-overdue invoice (in addition to the initial notification).
-
-    Returns True if the email was dispatched.
-    """
     ctx = _build_invoice_context(invoice)
-    if invoice.due_date:
-        ctx['days_overdue'] = (date.today() - invoice.due_date).days
-    else:
-        ctx['days_overdue'] = 0
+    ctx['days_overdue'] = (date.today() - invoice.due_date).days if invoice.due_date else 0
 
     business = invoice.business
     if not business.email:

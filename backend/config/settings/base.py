@@ -9,6 +9,8 @@ from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+import dj_database_url
+
 # ── Security ──────────────────────────────────────────────
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me-in-production')
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -75,33 +77,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASE_URL = config('DATABASE_URL', default=None)
 
 if DATABASE_URL:
-    import re
-    match = re.match(
-        r'postgres(?:ql)?://(?P<user>[^:]+):(?P<password>[^@]+)@(?P<host>[^:]+):(?P<port>\d+)/(?P<name>.+)',
-        DATABASE_URL
-    )
-    if match:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': match.group('name'),
-                'USER': match.group('user'),
-                'PASSWORD': match.group('password'),
-                'HOST': match.group('host'),
-                'PORT': match.group('port'),
-                'CONN_MAX_AGE': 60,
-                'OPTIONS': {
-                    'pool': True,
-                },
-            }
-        }
-    else:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=60,
+        )
+    }
 else:
     DATABASES = {
         'default': {

@@ -236,7 +236,6 @@ class InvoiceUpdateSerializer(serializers.ModelSerializer):
 
     Sends the full list of line items — items not in the list are removed.
     Items with an ``id`` are updated; items without an ``id`` are created.
-    Existing items not included in the payload are **deleted**.
     """
     line_items = InvoiceLineItemSerializer(many=True, required=False)
 
@@ -251,42 +250,17 @@ class InvoiceUpdateSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         line_items_data = validated_data.pop('line_items', None)
 
-        # Update scalar invoice fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
-        # Reconcile line items (create / update / delete)
         if line_items_data is not None:
-            self._reconcile_line_items(instance, line_items_data)
+            reconcile_line_items(instance, line_items_data)
 
         return instance
 
-    def _reconcile_line_items(self, invoice, items_data):
-        """Synchronise the invoice's line items with the payload."""
-        existing = {str(li.id): li for li in invoice.line_items.all()}
-        sent_ids = set()
 
-        for data in items_data:
-            li_id = data.get('id')
-            if li_id and str(li_id) in existing:
-                # Update existing line item
-                li = existing[str(li_id)]
-                for attr, value in data.items():
-                    if attr != 'id':
-                        setattr(li, attr, value)
-                li.save()
-                sent_ids.add(str(li_id))
-            else:
-                # Create new line item
-                InvoiceLineItem.objects.create(invoice=invoice, **{
-                    k: v for k, v in data.items() if k != 'id'
-                })
-
-        # Remove items not in the payload (only for fully-specified PUT)
-        for li_id, li in existing.items():
-            if li_id not in sent_ids:
-                li.delete()
+from .utils.invoice_helpers import reconcile_line_items
 
 
 # ── Income Entry ──────────────────────────────────────────
