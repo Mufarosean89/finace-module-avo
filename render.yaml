@@ -1,54 +1,27 @@
-# render.yaml
 services:
-  # -------------------------------------------------
-  # 1️⃣ Static Site – Avo Finance front‑end (HTML/JS/CSS)
-  # -------------------------------------------------
   - type: static
-    name: avo-finance-frontend   # appears in Render dashboard
+    name: avo-finance-frontend
     env: static
-    # The folder that holds index.html, etc.
     staticPublishPath: avoconnect-myfinances-demo/avo-finance-app
-    # Optional: customize the subdomain; Render will give you <name>.onrender.com
-    # domain: avo-finance-frontend.onrender.com   # uncomment if you want a fixed subdomain
-
-  # -------------------------------------------------
-  # 2️⃣ Web Service – Django backend
-  # -------------------------------------------------
   - type: web
     name: avo-finance-backend
     env: python
-    # Root of the repo is the build context
     buildCommand: |
-      # Install Python dependencies
       pip install -r backend/requirements.txt
-      # Collect static files for Django (needed for admin/media, etc.)
       cd backend && python manage.py collectstatic --noinput
     startCommand: |
-      # Use gunicorn; Render provides $PORT env var
       cd backend && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2
-    # -------------------------------------------------
-    # Environment variables – fill these in the Render UI later
-    # -------------------------------------------------
     envVars:
-      # Django secret key – generate with: python -c "import secrets; print(secrets.token_urlsafe(50))"
       - key: DJANGO_SECRET_KEY
-        # Value: <paste your generated secret here>
-      # Turn off debug in production
+        # generate: python -c "import secrets; print(secrets.token_urlsafe(50))"
       - key: DEBUG
         value: "false"
-      # Allowed hosts – Render will give you a service-specific hostname
       - key: ALLOWED_HOSTS
         value: ".onrender.com,localhost,127.0.0.1"
-      # Database URL – will be auto‑filled if you add a Postgres service (see below)
       - key: DATABASE_URL
         fromDatabase:
-          name: avo-finance-db   # must match the database name defined below
+          name: avo-finance-db
           property: connectionString
-
-  # -------------------------------------------------
-  # 3️⃣ (Optional) Free Postgres – for demo data
-  # -------------------------------------------------
-  databases:
-    - name: avo-finance-db
-      # Free tier: 1 GB storage, shared‑cpu, suitable for low‑traffic demos
-      plan: free
+databases:
+  - name: avo-finance-db
+    plan: free
