@@ -1,6 +1,7 @@
 services:
   - type: static
     name: avo-finance-frontend
+    env: static
     staticPublishPath: avoconnect-myfinances-demo/avo-finance-app
   - type: web
     name: avo-finance-backend
