@@ -10,3 +10,4 @@ Pillow>=11.0,<12.0
 django-storages[boto3]>=1.14,<1.15
 weasyprint>=62.0,<63.0
 twilio>=9.0,<10.0
+whitenoise>=6.0,<6.1
